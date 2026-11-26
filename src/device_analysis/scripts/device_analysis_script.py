@@ -6,6 +6,7 @@ import click
 
 from device_analysis.device_analysis import (
     format_summaries,
+    format_table,
     read_counts,
     summarize_devices,
 )
@@ -27,11 +28,13 @@ from device_analysis.device_analysis import (
 def device_analysis_cli(input_file, output):
     """Summarize daily cycle counts per device from INPUT_FILE (CSV).
 
-    Writes device name, number of non-zero days, median and mean cycle.
+    Shows device name, number of non-zero days, median and mean cycle on
+    screen and writes them to the output text file.
     """
     try:
         summaries = summarize_devices(read_counts(input_file))
     except ValueError as error:
         raise click.ClickException(str(error)) from error
+    click.echo(format_table(summaries))
     output.write_text(format_summaries(summaries), encoding="utf-8")
-    click.echo(f"Wrote {len(summaries)} device summaries to {output}")
+    click.echo(f"\nWrote {len(summaries)} device summaries to {output}")

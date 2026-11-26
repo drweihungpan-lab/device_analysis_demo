@@ -63,3 +63,20 @@ def format_summaries(summaries):
         for s in summaries
     ]
     return "\n".join(lines) + "\n"
+
+
+def format_table(summaries):
+    """Render summaries as an aligned table for display on screen."""
+    rows = [HEADER] + [
+        (s.device, str(s.nonzero_days), f"{s.median_cycle:.2f}", f"{s.mean_cycle:.2f}")
+        for s in summaries
+    ]
+    widths = [max(len(row[i]) for row in rows) for i in range(len(HEADER))]
+
+    def render(row):
+        first = row[0].ljust(widths[0])
+        rest = [cell.rjust(width) for cell, width in zip(row[1:], widths[1:])]
+        return "  ".join([first, *rest])
+
+    separator = "  ".join("-" * width for width in widths)
+    return "\n".join([render(rows[0]), separator, *map(render, rows[1:])])

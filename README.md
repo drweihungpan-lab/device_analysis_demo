@@ -15,7 +15,21 @@ pip install -e .
 device_analysis data/device_counts.csv -o device_summary.txt
 ```
 
-The output is a tab-separated text file with one row per device:
+The results are shown on the screen:
+
+```
+$ device_analysis data/device_counts.csv -o device_summary.txt
+device  nonzero_days  median_cycle  mean_cycle
+------  ------------  ------------  ----------
+DEV-A            352        179.00      174.00
+DEV-B            351        217.00      209.94
+DEV-C            357        260.00      254.77
+
+Wrote 3 device summaries to device_summary.txt
+```
+
+They are also saved to a tab-separated text file (`device_summary.txt`), with
+one row per device:
 
 ```
 device	nonzero_days	median_cycle	mean_cycle
