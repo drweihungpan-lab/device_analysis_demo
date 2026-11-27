@@ -83,7 +83,7 @@ test-docker-lint:	## Check linting of Dockerfile using hadolint
 
 .PHONY: docker-test
 docker-test:	## Run the integration test on the built image
-	docker run -v $$PWD/tests:/usr/app/tests $(DOCKER_IMAGE_REPO):$(call get_current_version) --message=Hallo
+	docker run -v $$PWD/tests:/usr/app/tests -v $$PWD/data:/usr/app/data $(DOCKER_IMAGE_REPO):$(call get_current_version) data/device_counts.csv -o /dev/stdout
 
 .PHONY: docker-login
 docker-login:	## Login in to AWS ECR - requires AWS credentials to be set
